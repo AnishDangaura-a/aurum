@@ -59,10 +59,6 @@ function go(p) {
     }
     updateNav();
     setTimeout(initAnims, 120);
-
-    // Update URL based on current route
-    var url = p === 'home' ? '/' : '/' + p;
-    window.history.pushState({ page: p }, '', url);
   }, 280);
 }
 
@@ -571,62 +567,12 @@ function initAnims() {
   });
 }
 
-/* ── ROUTE HANDLING ── */
-function loadRouteFromURL() {
-  var path = window.location.pathname;
-  var page = 'home';
-
-  if (path && path !== '/') {
-    var cleanPath = path.replace(/^\/+|\/+$/g, '');
-    if (allPages.indexOf(cleanPath) !== -1) {
-      page = cleanPath;
-    } else {
-      page = '404';
-    }
-  }
-
-  cur = page;
-  for (var i = 0; i < allPages.length; i++) {
-    var el = document.getElementById("page-" + allPages[i]);
-    if (el) el.classList.remove("active");
-    var nv = document.getElementById("nv-" + allPages[i]);
-    if (nv) nv.classList.remove("al");
-  }
-  var pg = document.getElementById("page-" + page);
-  if (pg) pg.classList.add("active");
-  var nv = document.getElementById("nv-" + page);
-  if (nv) nv.classList.add("al");
-  updateMobBar(page);
-  updateNav();
-  setTimeout(initAnims, 120);
-}
-
-window.addEventListener("popstate", function (e) {
-  var page = e.state && e.state.page ? e.state.page : 'home';
-  cur = page;
-  for (var i = 0; i < allPages.length; i++) {
-    var el = document.getElementById("page-" + allPages[i]);
-    if (el) el.classList.remove("active");
-    var nv = document.getElementById("nv-" + allPages[i]);
-    if (nv) nv.classList.remove("al");
-  }
-  var pg = document.getElementById("page-" + page);
-  if (pg) pg.classList.add("active");
-  var nv = document.getElementById("nv-" + page);
-  if (nv) nv.classList.add("al");
-  updateMobBar(page);
-  window.scrollTo({ top: 0, behavior: "instant" });
-  updateNav();
-  setTimeout(initAnims, 120);
-});
-
 /* ── INIT ── */
 window.addEventListener("DOMContentLoaded", function () {
-  loadRouteFromURL();
   initAnims();
   updateNav();
-  updateMobBar(cur);
-  document.querySelectorAll("#page-" + cur + " .fi").forEach(function (el) {
+  updateMobBar("home");
+  document.querySelectorAll("#page-home .fi").forEach(function (el) {
     el.classList.add("v");
   });
 });
