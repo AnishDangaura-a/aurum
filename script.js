@@ -58,7 +58,7 @@ function go(p) {
       }, 350);
     }
     updateNav();
-    setTimeout(initAnms, 120);
+    setTimeout(initAnims, 120);
 
     // Update URL based on current route
     var url = p === 'home' ? '/' : '/' + p;
